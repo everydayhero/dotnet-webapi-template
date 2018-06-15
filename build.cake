@@ -131,7 +131,7 @@ Task("Restore")
 Task("Test")
     .Does(() =>
     {
-        var testProjects = GetFiles("./test/**/*.csproj");
+        var testProjects = GetFiles("./sln/test/**/*.csproj");
 
         foreach(var testProject in testProjects)
         {

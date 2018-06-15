@@ -23,7 +23,7 @@ RUN curl -L -o /tmp/GitVersion_3.6.5.zip https://github.com/GitTools/GitVersion/
 
 WORKDIR /sln
 
-COPY ./build.cake ./build.sh ./WebApiTemplate.sln ./  
+COPY ./build.cake ./build.sh ./WebApi.sln ./  
 
 COPY ./sln ./sln  
 
