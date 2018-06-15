@@ -1,0 +1,9 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Sebastian Andres",
+    "classifications": [ "Web" ],
+    "identity": "JG.WebApiTemplate",
+    "name": "JG Web Api template",
+    "shortName": "jgwebapi",
+    "sourceName": "WebApi"
+}

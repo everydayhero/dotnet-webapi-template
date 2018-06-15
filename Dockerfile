@@ -23,7 +23,9 @@ RUN curl -L -o /tmp/GitVersion_3.6.5.zip https://github.com/GitTools/GitVersion/
 
 WORKDIR /sln
 
-COPY ./sln ./  
+COPY ./build.cake ./build.sh ./WebApiTemplate.sln ./  
+
+COPY ./sln ./sln  
 
 RUN ls
 
@@ -34,6 +36,6 @@ RUN ./build.sh -v=Verbose
 FROM microsoft/dotnet:2.1.0-aspnetcore-runtime-alpine 
 WORKDIR /app  
 ENV ASPNETCORE_ENVIRONMENT Production  
-ENV ASPNETCORE_HTTPS_PORT 5001
+ENV ASPNETCORE_URLS http://0.0.0.0:80;http://0.0.0.0:81
 ENTRYPOINT ["dotnet", "WebApi.Web.dll"]  
 COPY --from=builder ./sln/artifacts .
