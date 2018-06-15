@@ -5,7 +5,6 @@ OS=`uname -s`
 
 # Set Development Environment Variable.
 export ASPNETCORE_ENVIRONMENT=Development
-export ASPNETCORE_HTTPS_PORT=5001
 
 # Bug with OSX 10.12 runtimes
 if [ "$OS" = Darwin ]; then
