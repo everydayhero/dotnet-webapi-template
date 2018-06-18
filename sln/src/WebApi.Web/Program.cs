@@ -11,6 +11,7 @@
     using Microsoft.Extensions.Logging;
     using Serilog;
     using Serilog.Events;
+    using Autofac.Extensions.DependencyInjection;
 
     public class Program
     {
@@ -21,6 +22,7 @@
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) {
             var host = WebHost.CreateDefaultBuilder(args)
+                .ConfigureServices(services => services.AddAutofac())
                 .UseStartup<Startup>()
                 .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .ReadFrom.Configuration(hostingContext.Configuration));
