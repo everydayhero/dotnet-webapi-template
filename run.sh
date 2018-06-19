@@ -18,6 +18,6 @@ find . -name ".IncrementalCache" -delete
 # CWD and run watch
 # Make sure your Web Application follows the *.Web naming convention.
 dotnet restore
-cd sln/src/*
+cd sln/src/*.Web
 dotnet watch run
 popd
