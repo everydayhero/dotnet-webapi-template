@@ -1,4 +1,4 @@
-﻿namespace WebApi.Controllers
+﻿namespace WebApi.Api.V1.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,8 @@
     using Microsoft.AspNetCore.Mvc;
     using WebApi.Core.Services;
 
-    [Route("api/[controller]")]
+    [ApiVersion( "1.0" )]
+    [Route("api/v{api-version:apiVersion}/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
