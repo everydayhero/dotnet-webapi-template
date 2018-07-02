@@ -13,8 +13,9 @@ namespace WebApi.Web.Configuration
             builder.RegisterType<SimpleWithReturnCommandHandler>()
                 .Named<IRequestHandler<SimpleWithReturnCommand<SimpleWithReturnResponse>, SimpleWithReturnResponse>>("handler")
                 .InstancePerDependency();
+
             builder.RegisterDecorator<IRequestHandler<SimpleWithReturnCommand<SimpleWithReturnResponse>, SimpleWithReturnResponse>>(
-                (ctx, inner) => new AuditableCommandHandler<SimpleWithReturnCommand<SimpleWithReturnResponse>, SimpleWithReturnResponse>(inner),
+                (ctx, inner) => new LoggerCommandHandler<SimpleWithReturnCommand<SimpleWithReturnResponse>, SimpleWithReturnResponse>(new AuditableCommandHandler<SimpleWithReturnCommand<SimpleWithReturnResponse>, SimpleWithReturnResponse>(inner)),
                 "handler"
             );
         }
