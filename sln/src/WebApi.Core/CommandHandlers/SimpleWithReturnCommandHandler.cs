@@ -10,7 +10,7 @@ namespace WebApi.Core.CommandHandlers
     {
         public Task<SimpleWithReturnResponse> Handle(SimpleWithReturnCommand<SimpleWithReturnResponse> request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(new SimpleWithReturnResponse("result"));
+            return Task.FromResult(new SimpleWithReturnResponse($"{request.Id}{request.Id}"));
         }
     }
 }

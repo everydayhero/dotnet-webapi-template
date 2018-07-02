@@ -4,6 +4,11 @@ namespace WebApi.Core.Commands
 
     public class SimpleWithReturnCommand<T> : IRequest<T>
     {
+        public string Id { get; }
 
+        public SimpleWithReturnCommand(string id)
+        {
+            this.Id = id;
+        }
     }
 }
