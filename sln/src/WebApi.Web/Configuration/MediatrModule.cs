@@ -10,6 +10,15 @@ namespace WebApi.Web.Configuration
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterDecorator<IRequestHandler<MySimpleCommand, Unit>>(
+                (ctx, inner) => new LoggerCommandHandler<MySimpleCommand, Unit>(inner),
+                "unit"
+            );
+
+            builder.RegisterType<MySimpleCommandHandler>()
+                .Named<IRequestHandler<MySimpleCommand, Unit>>("unit")
+                .InstancePerDependency();
+
             builder.RegisterType<SimpleWithReturnCommandHandler>()
                 .Named<IRequestHandler<SimpleWithReturnCommand<SimpleWithReturnResponse>, SimpleWithReturnResponse>>("handler")
                 .InstancePerDependency();

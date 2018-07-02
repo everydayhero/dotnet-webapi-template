@@ -19,6 +19,14 @@ namespace WebApi.Web.Api.V1.Controllers
         }
 
         // GET api/values
+        [HttpGet]
+        public async Task<string> Get()
+        {
+            var result = await this.mediator.Send(new MySimpleCommand());
+            return "MySimpleCommand";
+        }
+
+        // GET api/values
         [HttpGet("{id:alpha}")]
         public async Task<string> Get(string id)
         {
