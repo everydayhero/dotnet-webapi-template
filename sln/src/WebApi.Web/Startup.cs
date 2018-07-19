@@ -18,6 +18,8 @@
     using Microsoft.Extensions.Options;
     using Swashbuckle.AspNetCore.Swagger;
     using WebApi.Web.Configuration;
+    using MediatR;
+    using WebApi.Core.Commands;
 
     public class Startup
     {
@@ -31,6 +33,8 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(Startup).Assembly, typeof(CreateCampaignCommand).Assembly);
+
             // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
             // note: the specified format code will format the version as "'v'major[.minor][-status]"
             services.AddMvcCore().AddVersionedApiExplorer(
@@ -41,7 +45,7 @@
                     // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
                     // can also be used to control the format of the API version in route templates
                     options.SubstituteApiVersionInUrl = true;
-                } );
+                });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddApiVersioning(o => o.ReportApiVersions = true);
@@ -49,7 +53,7 @@
             services.AddHttpsRedirection(options =>
             {
                 options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
-            });  
+            });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(
@@ -61,9 +65,9 @@
 
                     // add a swagger document for each discovered API version
                     // note: you might choose to skip or document deprecated API versions differently
-                    foreach ( var description in provider.ApiVersionDescriptions )
+                    foreach (var description in provider.ApiVersionDescriptions)
                     {
-                        options.SwaggerDoc( description.GroupName, CreateInfoForApiVersion( description ) );
+                        options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
                     }
 
                     // add a custom operation filter which sets default values
@@ -71,7 +75,7 @@
 
                     // integrate xml comments
                     // options.IncludeXmlComments( XmlCommentsFilePath );
-                } );
+                });
         }
 
         // ConfigureContainer is where you can register things directly
@@ -108,26 +112,26 @@
                 options =>
                 {
                     // build a swagger endpoint for each discovered API version
-                    foreach ( var description in provider.ApiVersionDescriptions )
+                    foreach (var description in provider.ApiVersionDescriptions)
                     {
-                        options.SwaggerEndpoint( $"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant() );
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                     }
-                } );
-    
+                });
+
             app.UseMvc();
         }
-/*
-        static string XmlCommentsFilePath
-        {
-            get
-            {
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var fileName = typeof( Startup ).GetTypeInfo().Assembly.GetName().Name + ".xml";
-                return Path.Combine( basePath, fileName );
-            }
-        }
-*/
-        static Info CreateInfoForApiVersion( ApiVersionDescription description )
+        /*
+                static string XmlCommentsFilePath
+                {
+                    get
+                    {
+                        var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                        var fileName = typeof( Startup ).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                        return Path.Combine( basePath, fileName );
+                    }
+                }
+        */
+        static Info CreateInfoForApiVersion(ApiVersionDescription description)
         {
             var info = new Info()
             {
@@ -138,7 +142,7 @@
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
             };
 
-            if ( description.IsDeprecated )
+            if (description.IsDeprecated)
             {
                 info.Description += " This API version has been deprecated.";
             }
